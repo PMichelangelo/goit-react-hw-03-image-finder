@@ -1,4 +1,4 @@
-import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+//import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import styles from './imageGallery.module.css';
 
 const ImageGallery = ({ items }) => {

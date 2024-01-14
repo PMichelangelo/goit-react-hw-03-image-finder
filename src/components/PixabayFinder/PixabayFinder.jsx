@@ -2,7 +2,7 @@ import { Component } from 'react';
 import Searchbar from 'components/Searchbar/Searchbar';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 import { searchResults } from 'components/api/api';
-import Button from 'components/Button/Button';
+//import Button from 'components/Button/Button';
 import styles from './pixabayFinder.module.css';
 
 class PixabayFinder extends Component {

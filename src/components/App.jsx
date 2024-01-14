@@ -1,5 +1,5 @@
-import ImageFinder from './ImageFinder';
+import PixabayFinder from './PixabayFinder/PixabayFinder';
 
 export const App = () => {
-  return <ImageFinder />;
+  return <PixabayFinder />;
 };

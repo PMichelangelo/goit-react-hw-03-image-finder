@@ -1,33 +1,42 @@
 import { Component } from 'react';
-import axios from 'axios';
 
 import styles from './searchbar.module.css';
 
 class Searchbar extends Component {
   state = {
-    images: [],
+    search: '',
   };
 
-  componentDidMount() {
-    axios
-      .get(
-        'https://pixabay.com/api/?q=cat&page=1&key=19208174-4a8a1fc5d875fb3b1b47e04d4&image_type=photo&orientation=horizontal&per_page=12'
-      )
-      .then(({ data }) => {
-        console.log(data);
-      });
-  }
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.onSubmit({ ...this.state });
+    this.setState({
+      search: '',
+    });
+  };
 
   render() {
+    const { handleChange, handleSubmit } = this;
+    const { search } = this.state;
     return (
       <header className={styles.searchbar}>
-        <form className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form}>
           <button type="submit" className={styles.button}>
             <span className={styles.buttonLabel}>Search</span>
           </button>
 
           <input
+            value={search}
+            onChange={handleChange}
             className={styles.input}
+            name="search"
             type="text"
             autoComplete="off"
             autoFocus

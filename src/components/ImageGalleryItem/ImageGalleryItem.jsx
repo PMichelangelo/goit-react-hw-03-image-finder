@@ -1,9 +1,9 @@
-import styles from './imageGalleryItem.module';
+import styles from './imageGalleryItem.module.css';
 
-const ImageGalleryItem = () => {
+const ImageGalleryItem = ({ id, webformatURL, largeImageURL }) => {
   return (
-    <li className={styles.galleryItem}>
-      <img src="" alt="" />
+    <li key={id} className={styles.galleryItem}>
+      <img src={webformatURL} alt={largeImageURL} />
     </li>
   );
 };

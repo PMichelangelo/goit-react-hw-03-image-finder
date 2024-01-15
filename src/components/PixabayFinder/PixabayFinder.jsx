@@ -24,7 +24,7 @@ class PixabayFinder extends Component {
         console.log(data);
 
         this.setState({
-          images: data?.length ? data : [],
+          images: data.hits ? data.hits : [],
         });
 
         console.log(this.state);

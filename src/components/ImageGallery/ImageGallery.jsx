@@ -3,13 +3,16 @@ import styles from './imageGallery.module.css';
 
 const ImageGallery = ({ items }) => {
   const elements = items.map(({ id, webformatURL }) => (
-    <li key={id} className={styles.galleryItem}>
-      <img src={webformatURL} alt="/" />
-      <p>test</p>
+    <li key={id} className={styles.ImageGalleryItem}>
+      <img
+        src={webformatURL}
+        alt="/"
+        className={styles.ImageGalleryItemImage}
+      />
     </li>
   ));
 
-  return <ul className={styles.gallery}>{elements}</ul>;
+  return <ul className={styles.imageGallery}>{elements}</ul>;
 };
 
 export default ImageGallery;

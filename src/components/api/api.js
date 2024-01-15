@@ -12,6 +12,8 @@ const instance = axios.create({
   },
 });
 
-export const searchResults = q => {
-  return instance.get('/', { params: { ...instance.defaults.params, q } });
+export const searchResults = (q, page) => {
+  return instance.get('/', {
+    params: { ...instance.defaults.params, q, page },
+  });
 };

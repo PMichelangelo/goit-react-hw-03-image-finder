@@ -2,7 +2,8 @@ import { Component } from 'react';
 import Searchbar from 'components/Searchbar/Searchbar';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 import { searchResults } from 'components/api/api';
-//import Button from 'components/Button/Button';
+import Button from 'components/Button/Button';
+import Modal from 'components/Modal/Modal';
 import styles from './pixabayFinder.module.css';
 
 class PixabayFinder extends Component {
@@ -11,43 +12,56 @@ class PixabayFinder extends Component {
     images: [],
     loading: false,
     error: null,
+    page: 1,
   };
 
   async componentDidUpdate(preProps, prevState) {
-    const { search } = this.state;
-    if (search && search !== prevState.search) {
+    const { search, page } = this.state;
+    if (search && (search !== prevState.search || page !== prevState.page)) {
+      this.fetchImages();
+    }
+  }
+
+  async fetchImages() {
+    const { search, page } = this.state;
+    try {
       this.setState({
         loading: true,
       });
-      try {
-        const { data } = await searchResults(search);
-        console.log(data);
+      const { data } = await searchResults(search, page);
+      console.log(data);
 
-        this.setState({
-          images: data.hits ? data.hits : [],
-        });
+      this.setState(({ images }) => ({
+        images: data.hits ? [...images, ...data.hits] : images,
+      }));
 
-        console.log(this.state);
-      } catch (error) {
-        this.setState({
-          error: error.message,
-        });
-      } finally {
-        this.setState({
-          loading: false,
-        });
-      }
+      //images: data.hits ? data.hits : [],}
+      console.log(this.state);
+    } catch (error) {
+      this.setState({
+        error: error.message,
+      });
+    } finally {
+      this.setState({
+        loading: false,
+      });
     }
   }
 
   handleSearch = ({ search }) => {
     this.setState({
       search,
+      images: [],
+      page: 1,
     });
   };
 
+  loadMore = () => {
+    this.setState(({ page }) => ({ page: page + 1 }));
+  };
+
   render() {
-    const { handleSearch } = this;
+    const { handleSearch, loadMore } = this;
     const { images, loading, error } = this.state;
     const isImages = Boolean(images.length);
     return (
@@ -56,6 +70,14 @@ class PixabayFinder extends Component {
         {error && <p className={styles.error}>{error}</p>}
         {loading && <p>Loading...</p>}
         {isImages && <ImageGallery items={images} />}
+        {isImages && (
+          <div className={styles.btnWrapper}>
+            <Button onClick={loadMore} type="button">
+              Load more
+            </Button>
+          </div>
+        )}
+        <Modal />
       </>
     );
   }

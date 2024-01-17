@@ -32,11 +32,15 @@ class PixabayFinder extends Component {
         loading: true,
       });
       const { data } = await searchResults(search, page);
-      console.log(data);
 
-      this.setState(({ images }) => ({
-        images: data.hits ? [...images, ...data.hits] : images,
-      }));
+      this.setState(
+        ({ images }) => ({
+          images: data.hits ? [...images, ...data.hits] : images,
+        }),
+        () => {
+          console.log(this.state);
+        }
+      );
 
       //images: data.hits ? data.hits : [],}
       console.log(this.state);
@@ -57,7 +61,6 @@ class PixabayFinder extends Component {
       images: [],
       page: 1,
     });
-    this.fetchImages();
   };
 
   loadMore = () => {

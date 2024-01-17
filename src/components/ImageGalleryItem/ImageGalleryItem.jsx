@@ -1,9 +1,15 @@
 import styles from './imageGalleryItem.module.css';
 
-const ImageGalleryItem = ({ id, webformatURL, largeImageURL }) => {
+const ImageGalleryItem = ({ id, webformatURL, largeImageURL, showModal }) => {
   return (
-    <li key={id} className={styles.galleryItem}>
-      <img src={webformatURL} alt={largeImageURL} />
+    <li
+      key={id}
+      onClick={() => {
+        showModal(largeImageURL);
+      }}
+      className={styles.ImageGalleryItem}
+    >
+      <img src={webformatURL} alt="" className={styles.ImageGalleryItemImage} />
     </li>
   );
 };

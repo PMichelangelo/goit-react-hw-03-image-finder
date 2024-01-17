@@ -13,6 +13,8 @@ class PixabayFinder extends Component {
     loading: false,
     error: null,
     page: 1,
+    modalOpen: false,
+    imageModal: {},
   };
 
   async componentDidUpdate(preProps, prevState) {
@@ -60,16 +62,25 @@ class PixabayFinder extends Component {
     this.setState(({ page }) => ({ page: page + 1 }));
   };
 
+  showModal = largeImageURL => {
+    this.setState({
+      modalOpen: true,
+      imageModal: {
+        largeImageURL,
+      },
+    });
+  };
+
   render() {
-    const { handleSearch, loadMore } = this;
-    const { images, loading, error } = this.state;
+    const { handleSearch, loadMore, showModal } = this;
+    const { images, loading, error, modalOpen, imageModal } = this.state;
     const isImages = Boolean(images.length);
     return (
       <>
         <Searchbar onSubmit={handleSearch} />
         {error && <p className={styles.error}>{error}</p>}
         {loading && <p>Loading...</p>}
-        {isImages && <ImageGallery items={images} />}
+        {isImages && <ImageGallery items={images} showModal={showModal} />}
         {isImages && (
           <div className={styles.btnWrapper}>
             <Button onClick={loadMore} type="button">
@@ -77,7 +88,7 @@ class PixabayFinder extends Component {
             </Button>
           </div>
         )}
-        <Modal />
+        {modalOpen && <Modal largeImageURL={imageModal.largeImageURL} />}
       </>
     );
   }

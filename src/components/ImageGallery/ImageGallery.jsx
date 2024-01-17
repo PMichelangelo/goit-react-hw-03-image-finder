@@ -1,15 +1,15 @@
-//import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import styles from './imageGallery.module.css';
 
-const ImageGallery = ({ items }) => {
-  const elements = items.map(({ id, webformatURL }) => (
-    <li key={id} className={styles.ImageGalleryItem}>
-      <img
-        src={webformatURL}
-        alt="/"
-        className={styles.ImageGalleryItemImage}
-      />
-    </li>
+const ImageGallery = ({ items, showModal }) => {
+  const elements = items.map(({ id, webformatURL, largeImageURL }) => (
+    <ImageGalleryItem
+      key={id}
+      id={id}
+      webformatURL={webformatURL}
+      largeImageURL={largeImageURL}
+      showModal={showModal}
+    />
   ));
 
   return <ul className={styles.imageGallery}>{elements}</ul>;

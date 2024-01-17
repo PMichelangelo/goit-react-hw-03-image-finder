@@ -7,11 +7,12 @@ const modalRoot = document.getElementById('modal-root');
 
 class Modal extends Component {
   render() {
+    const { largeImageURL } = this.props;
     return (
       createPortal(
         <div className={styles.overlay}>
           <div className={styles.modal}>
-            <img src="" alt="" />
+            <img src={largeImageURL} alt="" />
           </div>
         </div>
       ),

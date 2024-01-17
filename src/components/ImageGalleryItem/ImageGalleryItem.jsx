@@ -3,7 +3,6 @@ import styles from './imageGalleryItem.module.css';
 const ImageGalleryItem = ({ id, webformatURL, largeImageURL, showModal }) => {
   return (
     <li
-      key={id}
       onClick={() => {
         showModal(largeImageURL);
       }}

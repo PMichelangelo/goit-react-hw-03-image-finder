@@ -5,7 +5,6 @@ const ImageGallery = ({ items, showModal }) => {
   const elements = items.map(({ id, webformatURL, largeImageURL }) => (
     <ImageGalleryItem
       key={id}
-      id={id}
       webformatURL={webformatURL}
       largeImageURL={largeImageURL}
       showModal={showModal}

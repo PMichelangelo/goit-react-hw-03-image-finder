@@ -4,6 +4,7 @@ import ImageGallery from 'components/ImageGallery/ImageGallery';
 import { searchResults } from 'components/api/api';
 import Button from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
+import Loader from 'components/Loader/Loader';
 import styles from './pixabayFinder.module.css';
 
 class PixabayFinder extends Component {
@@ -56,6 +57,7 @@ class PixabayFinder extends Component {
       images: [],
       page: 1,
     });
+    this.fetchImages();
   };
 
   loadMore = () => {
@@ -71,15 +73,22 @@ class PixabayFinder extends Component {
     });
   };
 
+  closeModal = () => {
+    this.setState({
+      modalOpen: false,
+      imageModal: {},
+    });
+  };
+
   render() {
-    const { handleSearch, loadMore, showModal } = this;
+    const { handleSearch, loadMore, showModal, closeModal } = this;
     const { images, loading, error, modalOpen, imageModal } = this.state;
     const isImages = Boolean(images.length);
     return (
       <>
         <Searchbar onSubmit={handleSearch} />
         {error && <p className={styles.error}>{error}</p>}
-        {loading && <p>Loading...</p>}
+        {loading && <Loader />}
         {isImages && <ImageGallery items={images} showModal={showModal} />}
         {isImages && (
           <div className={styles.btnWrapper}>
@@ -88,7 +97,9 @@ class PixabayFinder extends Component {
             </Button>
           </div>
         )}
-        {modalOpen && <Modal largeImageURL={imageModal.largeImageURL} />}
+        {modalOpen && (
+          <Modal largeImageURL={imageModal.largeImageURL} close={closeModal} />
+        )}
       </>
     );
   }

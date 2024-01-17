@@ -33,14 +33,9 @@ class PixabayFinder extends Component {
       });
       const { data } = await searchResults(search, page);
 
-      this.setState(
-        ({ images }) => ({
-          images: data.hits ? [...images, ...data.hits] : images,
-        }),
-        () => {
-          console.log(this.state);
-        }
-      );
+      this.setState(({ images }) => ({
+        images: data.hits ? [...images, ...data.hits] : images,
+      }));
 
       //images: data.hits ? data.hits : [],}
       console.log(this.state);

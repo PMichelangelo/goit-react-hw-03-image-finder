@@ -19,10 +19,16 @@ class PixabayFinder extends Component {
   };
 
   async componentDidUpdate(preProps, prevState) {
-    const { search, page } = this.state;
-    if (search && (search !== prevState.search || page !== prevState.page)) {
+    if (
+      prevState.search !== this.state.search ||
+      prevState.page !== this.state.page
+    ) {
       this.fetchImages();
     }
+    // const { search, page } = this.state;
+    // if (search && (search !== prevState.search || page !== prevState.page)) {
+    //   this.fetchImages();
+    // }
   }
 
   async fetchImages() {
@@ -33,9 +39,13 @@ class PixabayFinder extends Component {
       });
       const { data } = await searchResults(search, page);
 
-      this.setState(({ images }) => ({
-        images: data.hits ? [...images, ...data.hits] : images,
-      }));
+      if (data.hits && data.hits.length > 0) {
+        this.setState(({ images }) => ({
+          images: [...images, ...data.hits],
+        }));
+      } else {
+        alert('Your query is invalid');
+      }
 
       //images: data.hits ? data.hits : [],}
       console.log(this.state);
@@ -51,6 +61,9 @@ class PixabayFinder extends Component {
   }
 
   handleSearch = ({ search }) => {
+    if (this.state.search === search) {
+      return alert(`You alredy get results of ${search}! Try something else.`);
+    }
     this.setState({
       search,
       images: [],
